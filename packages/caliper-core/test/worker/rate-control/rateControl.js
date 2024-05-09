@@ -80,7 +80,7 @@ describe('RateControl', () => {
         })
 
 
-        const rateControlTypes = [ "composite-rate", "fixed-load", "fixed-feedback-rate", "fixed-rate", "linear-rate", "maximum-rate", "zero-rate", "record-rate", "replay-rate" ];
+        const rateControlTypes = ["composite-rate", "fixed-load", "fixed-feedback-rate", "fixed-rate", "linear-rate", "maximum-rate", "zero-rate", "record-rate", "replay-rate"];
 
         rateControlTypes.forEach((type) => it(`should create the correct rate controller for ${type}`, () => {
             // Stub the CapilerUtils module
@@ -93,9 +93,6 @@ describe('RateControl', () => {
                     testMessageStubs: {
                         getRateControlSpec: {
                             type,
-                            opts: {
-                                test: 'test-control-options'
-                            }
                         }
                     }
                 });
@@ -109,7 +106,7 @@ describe('RateControl', () => {
             // loadModuleFunction is stubbed to return undefined
             RateControl.__with__("CaliperUtils", {
                 getLogger: sinon.stub(),
-                loadModuleFunction: sinon.stub().returns(undefined)
+                loadModuleFunction: sinon.stub()
             })(() => {
                 chai.expect(() => createRateControl()).to.throw('fixed-rate does not export the mandatory factory function');
             })
@@ -122,7 +119,6 @@ describe('RateControl', () => {
             rateControl.controller.applyRateControl = sinon.stub().resolves();
 
             await rateControl.applyRateControl();
-
             rateControl.controller.applyRateControl.should.have.been.calledOnce;
         })
     })
@@ -133,9 +129,7 @@ describe('RateControl', () => {
             rateControl.controller.end = sinon.stub().resolves();
 
             await rateControl.end();
-
             rateControl.controller.end.should.have.been.calledOnce;
         })
     })
-
 })
