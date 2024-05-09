@@ -163,4 +163,12 @@ function createRateController(testMessage, stats, workerIndex) {
     return new ReplayRateController(testMessage, stats, workerIndex);
 }
 
-module.exports.createRateController = createRateController;
+module.exports = {
+    createRateController,
+
+    // Exposed for testing purposes
+    TEXT_FORMAT,
+    BINARY_BE_FORMAT,
+    BINARY_LE_FORMAT,
+    supportedFormats
+};
