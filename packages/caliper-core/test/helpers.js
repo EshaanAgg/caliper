@@ -14,24 +14,24 @@
 
 'use strict';
 
-/** 
- * Deep merges two objects, overwriting properties of the base object with the update object.
+/**
+ * Deep merges two objects, overwriting properties of the base object with the update object. Also adds the new properties of the update object to the base object.
  * @param {Object} baseObject The base object.
  * @param {Object} updateObject The object to merge.
  * @returns {Object} The merged object.
 */
 const deepMerge = (baseObject, updateObject) => {
-    let merged = Object.assign({}, baseObject);
+    const mergedObject = { ...baseObject };
 
-    for (let key in updateObject) {
-        if (updateObject[key] instanceof Object && !(updateObject[key] instanceof Array)) {
-            merged[key] = deepMerge(baseObject[key], updateObject[key]);
+    for (const key in updateObject) {
+        if (updateObject[key] instanceof Object && key in baseObject) {
+            mergedObject[key] = deepMerge(baseObject[key], updateObject[key]);
         } else {
-            merged[key] = updateObject[key];
+            mergedObject[key] = updateObject[key];
         }
     }
 
-    return merged;
+    return mergedObject;
 }
 
 module.exports = {
